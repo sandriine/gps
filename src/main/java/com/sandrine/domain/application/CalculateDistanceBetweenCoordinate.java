@@ -1,4 +1,4 @@
-package com.sandrine.neveu.domain.application;
+package com.sandrine.domain.application;
 
 public class CalculateDistanceBetweenCoordinate {
 }

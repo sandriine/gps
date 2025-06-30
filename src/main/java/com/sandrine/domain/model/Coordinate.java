@@ -1,10 +1,10 @@
-package com.sandrine.neveu.domain.model;
+package com.sandrine.domain.model;
 
 public class Coordinate {
     private double longitude;
     private double latitude;
 
-    public Coordinate(double longitude, double latitude) {
+    public Coordinate(double latitude, double longitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }

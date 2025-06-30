@@ -1,4 +1,4 @@
-package com.sandrine.neveu;
+package com.sandrine;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
