@@ -7,10 +7,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CreateCoordinateTest {
+    private CoordinateRepository coordinateRepository;
+
     @Test
     void should_create_coordinate() {
-        CoordinateRepository repo = coordinate -> coordinate;
-        CreateCoordinate useCase = new CreateCoordinate(repo);
+        CreateCoordinate useCase = new CreateCoordinate(coordinateRepository);
 
         Coordinate result = useCase.execute(48.8566, 2.3522);
 

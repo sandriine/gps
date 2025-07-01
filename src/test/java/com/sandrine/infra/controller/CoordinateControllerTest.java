@@ -1,5 +1,6 @@
 package com.sandrine.infra.controller;
 
+import com.sandrine.domain.application.CheckDistanceBetweenCoordinate;
 import com.sandrine.domain.application.CreateCoordinate;
 import com.sandrine.domain.model.Coordinate;
 import com.sandrine.domain.repository.CoordinateRepository;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -29,6 +31,9 @@ class CoordinateControllerTest {
 
     @MockBean
     private CoordinateRepository coordinateRepository;
+
+    @MockBean
+    private CheckDistanceBetweenCoordinate checkDistanceBetweenCoordinate;
 
     @Test
     void should_return_created_coordinate() throws Exception {
@@ -58,5 +63,33 @@ class CoordinateControllerTest {
                 .andExpect(jsonPath("$[0].longitude").value(34.0))
                 .andExpect(jsonPath("$[1].latitude").value(56.7))
                 .andExpect(jsonPath("$[1].longitude").value(89.1));
+    }
+
+    @Test
+    void should_return_true_if_distance_is_more_than_10km() throws Exception {
+
+        when(checkDistanceBetweenCoordinate.isMoreThan(
+                new Coordinate(48.8566, 2.3522),
+                new Coordinate(49.8566, 2.3522),
+                10.0
+        )).thenReturn(true);
+
+        mockMvc.perform(post("/coordinates/check-distance")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "distanceToCheck": 10.0,
+                                    "coordinate1": {
+                                       "latitude": 48.8566,
+                                       "longitude": 2.3522                \s
+                                    },
+                                    "coordinate2": {
+                                       "latitude": 49.8566,
+                                       "longitude": 2.3522                         \s
+                                    }                                                                                              \s
+                                }
+                               \s"""))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.moreThanDistance").value(true));
     }
 }
