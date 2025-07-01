@@ -1,22 +1,22 @@
 package com.sandrine.infra.repository;
 
 import com.sandrine.domain.model.Coordinate;
-import com.sandrine.infra.document.CoordinateDocument;
+import com.sandrine.infra.entity.CoordinateEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class CoordinateRepositoryPort implements com.sandrine.domain.repository.CoordinateRepository {
 
-    private final CoordinateRepository springDataRepository;
+    private final JpaCoordinateRepository coordinateJpaRepository;
 
-    public CoordinateRepositoryPort(CoordinateRepository springDataRepository) {
-        this.springDataRepository = springDataRepository;
+    public CoordinateRepositoryPort(JpaCoordinateRepository coordinateJpaRepository) {
+        this.coordinateJpaRepository = coordinateJpaRepository;
     }
 
     @Override
     public Coordinate save(Coordinate coordinate) {
-        CoordinateDocument doc = new CoordinateDocument(coordinate.getLatitude(), coordinate.getLongitude());
-        CoordinateDocument saved = springDataRepository.save(doc);
+        CoordinateEntity entity = new CoordinateEntity(coordinate.getLatitude(), coordinate.getLongitude());
+        CoordinateEntity saved = coordinateJpaRepository.save(entity);
         return new Coordinate(saved.getLatitude(), saved.getLongitude());
     }
 }
