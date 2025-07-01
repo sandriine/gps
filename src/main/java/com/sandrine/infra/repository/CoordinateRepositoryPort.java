@@ -15,7 +15,7 @@ public class CoordinateRepositoryPort implements com.sandrine.domain.repository.
 
     @Override
     public Coordinate save(Coordinate coordinate) {
-        CoordinateEntity entity = new CoordinateEntity(coordinate.getLatitude(), coordinate.getLongitude());
+        CoordinateEntity entity = new CoordinateEntity(coordinate.latitude(), coordinate.longitude());
         CoordinateEntity saved = coordinateJpaRepository.save(entity);
         return new Coordinate(saved.getLatitude(), saved.getLongitude());
     }

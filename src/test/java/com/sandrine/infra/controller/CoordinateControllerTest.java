@@ -28,7 +28,7 @@ class CoordinateControllerTest {
         when(createCoordinate.execute(12.0, 34.0))
                 .thenReturn(new Coordinate(12.0, 34.0));
 
-        mockMvc.perform(post("/coordinates")
+        mockMvc.perform(post("/coordinates/create")
                         .contentType(APPLICATION_JSON)
                         .content("{\"latitude\":12.0,\"longitude\":34.0}"))
                 .andExpect(status().isOk())

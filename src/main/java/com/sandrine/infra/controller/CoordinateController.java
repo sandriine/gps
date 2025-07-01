@@ -17,12 +17,9 @@ public class CoordinateController {
         this.createCoordinate = createCoordinate;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public CoordinateResponse create(@RequestBody CoordinateRequest request) {
         Coordinate coordinate = createCoordinate.execute(request.latitude(), request.longitude());
-        return new CoordinateResponse(coordinate.getLatitude(), coordinate.getLongitude());
+        return CoordinateResponse.from(coordinate);
     }
-
-    public record CoordinateRequest(double latitude, double longitude) {}
-    public record CoordinateResponse(double latitude, double longitude) {}
 }
