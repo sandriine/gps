@@ -31,9 +31,8 @@ public class CoordinateController {
     }
 
     @PostMapping("/check-distance")
-    public CheckDistanceResponse check(@RequestBody CheckDistanceRequest request) {
-        boolean result = checkDistanceBetweenCoordinate.isMoreThan(request.coordinate1(), request.coordinate2(), request.distanceToCheck());
-        return new CheckDistanceResponse(result);
+    public boolean check(@RequestBody CheckDistanceRequest request) {
+        return  checkDistanceBetweenCoordinate.isMoreThan(request.coordinate1(), request.coordinate2(), request.distanceToCheck());
     }
 
     @GetMapping
