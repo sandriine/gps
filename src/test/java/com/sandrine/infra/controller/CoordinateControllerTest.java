@@ -1,7 +1,6 @@
 package com.sandrine.infra.controller;
 
 import com.sandrine.domain.application.CheckDistanceBetweenCoordinate;
-import com.sandrine.domain.application.CreateCoordinate;
 import com.sandrine.domain.model.Coordinate;
 import com.sandrine.domain.repository.CoordinateRepository;
 import org.junit.jupiter.api.Test;
@@ -14,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -27,9 +25,6 @@ class CoordinateControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private CreateCoordinate createCoordinate;
-
-    @MockBean
     private CoordinateRepository coordinateRepository;
 
     @MockBean
@@ -37,8 +32,8 @@ class CoordinateControllerTest {
 
     @Test
     void should_return_created_coordinate() throws Exception {
-        when(createCoordinate.execute(12.0, 34.0))
-                .thenReturn(new Coordinate(12.0, 34.0));
+        Coordinate coordinate = new Coordinate(1L, 12.0, 34.0);
+        when(coordinateRepository.save(coordinate)).thenReturn(coordinate);
 
         mockMvc.perform(post("/coordinates/create")
                         .contentType(APPLICATION_JSON)
@@ -51,8 +46,8 @@ class CoordinateControllerTest {
     @Test
     void should_return_all_coordinates() throws Exception {
         List<Coordinate> coordinates = List.of(
-                new Coordinate(12.0, 34.0),
-                new Coordinate(56.7, 89.1)
+                new Coordinate(1L, 12.0, 34.0),
+                new Coordinate(2L, 56.7, 89.1)
         );
         when(coordinateRepository.findAll()).thenReturn(coordinates);
 
@@ -66,11 +61,17 @@ class CoordinateControllerTest {
     }
 
     @Test
+    void should_delete_coordinate() throws Exception {
+        mockMvc.perform(delete("/coordinates/1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     void should_return_true_if_distance_is_more_than_10km() throws Exception {
 
         when(checkDistanceBetweenCoordinate.isMoreThan(
-                new Coordinate(48.8566, 2.3522),
-                new Coordinate(49.8566, 2.3522),
+                new Coordinate(1L, 48.8566, 2.3522),
+                new Coordinate(2L, 49.8566, 2.3522),
                 10.0
         )).thenReturn(true);
 

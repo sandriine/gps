@@ -15,9 +15,14 @@ public class CoordinateEntity {
 
     protected CoordinateEntity() {} // JPA only
 
-    public CoordinateEntity(double latitude, double longitude) {
+    public CoordinateEntity(Long id, double latitude, double longitude) {
+        this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public double getLatitude() {

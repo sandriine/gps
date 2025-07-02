@@ -7,4 +7,5 @@ import java.util.List;
 public interface CoordinateRepository {
     Coordinate save(Coordinate coordinate);
     List<Coordinate> findAll();
+    void delete(Long id);
 }
