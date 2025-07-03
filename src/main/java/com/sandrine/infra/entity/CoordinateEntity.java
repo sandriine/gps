@@ -10,12 +10,12 @@ public class CoordinateEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double latitude;
-    private double longitude;
+    private Double latitude;
+    private Double longitude;
 
     protected CoordinateEntity() {} // JPA only
 
-    public CoordinateEntity(Long id, double latitude, double longitude) {
+    public CoordinateEntity(Long id, Double latitude, Double longitude) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -25,11 +25,11 @@ public class CoordinateEntity {
         return id;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 }

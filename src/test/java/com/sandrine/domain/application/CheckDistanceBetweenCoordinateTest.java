@@ -18,4 +18,16 @@ class CheckDistanceBetweenCoordinateTest {
 
         assertEquals(true, result);
     }
+
+    @Test
+    void should_return_false_when_coordinates_are_less_than_10km_apart() {
+        CheckDistanceBetweenCoordinate checkDistanceBetweenCoordinate = new CheckDistanceBetweenCoordinate();
+
+        Coordinate coordinate1 = new Coordinate(1L, 48.8584, 2.2945);
+        Coordinate coordinate2 = new Coordinate(2L, 48.8408, 2.3200);
+
+        Boolean result = checkDistanceBetweenCoordinate.isMoreThan(coordinate1, coordinate2, 10.0);
+
+        assertEquals(false, result);
+    }
 }
